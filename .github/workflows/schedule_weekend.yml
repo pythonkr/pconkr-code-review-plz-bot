@@ -1,4 +1,4 @@
-name: noti on workday
+name: noti on weekend
 
 on:
   schedule:
