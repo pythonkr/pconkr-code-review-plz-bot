@@ -1,0 +1,31 @@
+name: noti on workday
+
+on:
+  schedule:
+    - cron: "* * * * *"
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python {{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install python package
+      run: pip install -r requirements.txt
+
+    - name: Build
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      run: |
+        python main.py
