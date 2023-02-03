@@ -11,4 +11,4 @@ class SlackClient:
 
     def send(self, message_templates: list) -> None:
         template = templates.SlackTemplate("code_review")
-        self.client.chat_postMessage(channel="bot-test", blocks=template._code_review(message_templates))
+        self.client.chat_postMessage(channel="6-홈페이지개발", blocks=template._code_review(message_templates))

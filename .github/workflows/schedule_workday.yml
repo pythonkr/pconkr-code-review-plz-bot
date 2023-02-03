@@ -2,7 +2,7 @@ name: noti on workday
 
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 18-23/2 * * 1-5"
   workflow_dispatch:
 
 jobs:
