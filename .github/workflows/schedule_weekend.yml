@@ -25,7 +25,9 @@ jobs:
 
     - name: Build
       env:
+        BOT_ID: ${{ secrets.BOT_ID }}
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        WEB_SERVICE_TEAM_CH_ID: ${{ secrets.WEB_SERVICE_TEAM_CH_ID }}
       run: |
         python main.py
