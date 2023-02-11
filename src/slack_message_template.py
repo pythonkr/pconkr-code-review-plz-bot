@@ -12,6 +12,9 @@ class SlackTemplate:
                 "https://raw.githubusercontent.com/pythonkr/pconkr-code-review-plz-bot/master/static/image_100x100.jpg"
             )
 
+    def get_block(self):
+        return self.block
+
     def _init_title_section(self, title: str, sub_title: str, image_url: str) -> list:
         return [
             {
@@ -25,27 +28,35 @@ class SlackTemplate:
             {
                 "type": "section",
                 "text": {
-                        "type": "plain_text",
-                        "text": sub_title
+                    "type": "plain_text",
+                    "text": sub_title
                 },
                 "accessory": {
-                        "type": "image",
-                        "image_url": image_url,
-                        "alt_text": "대표 이미지"
-                    }
+                    "type": "image",
+                    "image_url": image_url,
+                    "alt_text": "대표 이미지"
+                }
             }
         ]
 
-    def _code_review(self, infos: list):
+    def get_attachment(self, infos: list):
         """블럭 포매터
         """
-        self.block += [self._code_review_section(elem.get("repo_name"), elem.get("title"), elem.get("url"))
-                       for elem in infos]
+        attachment_block = []
 
-        return self.block
+        for elem in infos:
+            attachment_block.extend(self._code_review_section(elem.get("repo_name"), elem.get("title"), elem.get("url")))
+            # attachment_block.append({"type": "divider"})
+
+        return [
+            {
+                "blocks": attachment_block
+            }
+        ]
 
     def _code_review_section(self, repo_name: str, pr_title: str, pr_url: str):
-        return {
+        return [
+            {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
@@ -68,4 +79,8 @@ class SlackTemplate:
                     "url": pr_url,
                     "action_id": "button-action"
                 }
+            },
+            {
+                "type": "divider"
             }
+        ]

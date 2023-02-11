@@ -12,7 +12,8 @@ class SlackClient:
 
     def send(self, message_templates: list) -> None:
         template = templates.SlackTemplate("code_review")
-        self.client.chat_postMessage(channel="6-홈페이지개발", blocks=template._code_review(message_templates))
+        self.client.chat_postMessage(channel="6-홈페이지개발", blocks=template.get_block(),
+                                     attachments=template.get_attachment(message_templates))
 
     def delete_all_previous_message(self, channel_id: str, bot_id: str) -> None:
         delete_target = self.get_all_bot_message(channel_id, bot_id=bot_id)
